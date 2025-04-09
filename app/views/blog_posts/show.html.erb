@@ -1,3 +1,16 @@
-<%= link_to "Edit", edit_blog_post_path(@blog_post) if user_signed_in? %>
-<h1><%= @blog_post.title %></h1>
-<%= @blog_post.body %>
+<div class="max-w-3xl mx-auto bg-white p-6 rounded shadow mt-8">
+  <div class="mb-4 flex justify-between items-center">
+    <h1 class="text-3xl font-bold"><%= @blog_post.title %></h1>
+    <% if user_signed_in? %>
+      <%= link_to "Edit", edit_blog_post_path(@blog_post), class: "text-blue-600 hover:underline" %>
+    <% end %>
+  </div>
+  <div class="prose">
+    <%= @blog_post.body %>
+  </div>
+  <% if user_signed_in? %>
+    <div class="mt-4">
+      <%= button_to "Delete", @blog_post, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+    </div>
+  <% end %>
+</div>
