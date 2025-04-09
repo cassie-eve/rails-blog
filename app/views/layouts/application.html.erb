@@ -7,19 +7,39 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   </head>
+  <body class="bg-gray-50 text-gray-900">
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <%= link_to "Blog", root_path, class: "text-xl font-bold" %>
+        <div>
+          <% if user_signed_in? %>
+            <%= link_to "New Blog Post", new_blog_post_path, class: "mr-4 text-blue-600 hover:underline" %>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, class: "px-3 py-1 text-white bg-red-500 rounded hover:bg-red-600" %>
+          <% else %>
+            <%= link_to "Log in", new_user_session_path, class: "px-3 py-1 text-white bg-blue-500 rounded hover:bg-blue-600" %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
 
-  <body class="prose mx-auto">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-
-    <div>
-      <% if user_signed_in? %>
-        <%= link_to "New Blog Post", new_blog_post_path %>
-        <%= button_to "Logout", destroy_user_session_path, method: :delete %>
+    <!-- Main Content Area -->
+    <main class="container mx-auto px-4 py-8">
+      <% if notice.present? %>
+        <div class="mb-4 p-4 bg-green-100 text-green-800 rounded">
+          <%= notice %>
+        </div>
+      <% end %>
+      <% if alert.present? %>
+        <div class="mb-4 p-4 bg-red-100 text-red-800 rounded">
+          <%= alert %>
+        </div>
       <% end %>
 
-    </div>
-
-    <%= yield %>
+      <!-- If you add Tailwind Typography in your config, you can wrap content in a "prose" div -->
+      <div class="prose max-w-none">
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>
